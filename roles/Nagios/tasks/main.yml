@@ -1,0 +1,50 @@
+---
+# tasks file for Nagios
+
+- name: Check for Updates in Ubuntu
+  apt:
+    name: 
+      - autoconf 
+      - bc
+      - gawk
+      - dc
+      - build-essential
+      - gcc
+      - libc6
+      - make
+      - wget
+      - unzip
+      - apache2
+      - php
+      - libapache2-mod-php
+      - libgd-dev
+      - libmcrypt-dev
+      - make
+      - libssl-dev
+      - snmp
+      - libnet-snmp-perl
+      - gettext 
+    state: latest
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu"
+
+- name: Install prerequisite packages
+  apt:
+    name:
+      - wget 
+      - unzip
+      - vim
+      - curl
+      - gcc
+      - openssl
+      - build-essential
+      - libgd-dev
+      - libssl-dev
+      - libapache2-mod-php
+      - php-gd
+      - php
+      - apache2
+    state: latest
+    update_cache: true
+  when: ansible_distribution == "Ubuntu"
+

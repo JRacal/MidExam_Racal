@@ -1,0 +1,39 @@
+---
+# tasks file for Prometheus
+
+- name: update the system in Ubuntu
+  apt:
+    update_cache: yes
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: Download and Install Prometheus in Ubuntu
+  command: "{{ item }}"
+  with_items:
+    - mkdir -p /etc/prometheus
+    - mkdir -p /var/lib/prometheus
+    - wget https://github.com/prometheus/prometheus/releases/download/v2.31.0/prometheus-2.31.0.linux-amd64.tar.gz
+  become: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: Extract the tarball file in Ubuntu
+  shell: "{{ item }}"
+  with_items:
+    - tar -xvf prometheus-2.31.0.linux-amd64.tar.gz
+    - cd prometheus-2.31.0.linux-amd64
+  become: true
+  when: ansible_distribution == "Ubuntu"
+
+- name: update the system in CentOS
+  dnf:
+    update_cache: yes
+  when: ansible_distribution == "CentOS"
+
+- name: Download and Install Prometheus in CentOS
+  command: "{{ item }}"
+  with_items:
+    - mkdir -p /etc/prometheus
+    - mkdir -p /var/lib/prometheus
+    - wget https://github.com/prometheus/prometheus/releases/download/v2.31.0/prometheus-2.31.0.linux-amd64.tar.gz
+  become: true
+  when: ansible_distribution == "CentOS"
